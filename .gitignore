@@ -1,0 +1,81 @@
+## Visual Studio / .NET
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+out/
+
+# Packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+project.lock.json
+project.assets.json
+*.nupkg.metadata
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# Debug / profiling
+*.pdb
+*.cache
+*.ilk
+*.log
+*.obj
+*.ilk
+*.opendb
+*.VC.db
+*.vscode-test
+
+# Publish / deployment
+publish/
+publish_temp/
+*.publish.xml
+
+# IIS
+App_Data/
+
+# Resharper
+_ReSharper*/
+*.ReSharper*/
+*.DotSettings.user
+
+# Mono / Xamarin
+*.apk
+*.aab
+*.xcuserdata/
+*.userprefs
+
+# EntityFramework / EF tooling
+*.dbmdl
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Azure / local secrets
+secrets.json
+local.settings.json
+
+# Generated files
+*.generated.cs
+*.designer.cs
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
