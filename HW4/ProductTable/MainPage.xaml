@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProductTable.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid>
+
+        <Grid Padding="20"
+              RowDefinitions="Auto,*"
+              RowSpacing="10">
+
+            <HorizontalStackLayout Grid.Row="0"
+                                   Spacing="10">
+
+                <Button Text="Додати товар"
+                        Clicked="OnAddProductClicked" />
+
+                <Button x:Name="DeleteButton"
+                        Text="Видалити товар"
+                        IsEnabled="False"
+                        Clicked="OnDeleteProductClicked" />
+            </HorizontalStackLayout>
+
+            <CollectionView Grid.Row="1"
+                            x:Name="ProductsView"
+                            SelectionMode="Single"
+                            SelectionChanged="OnSelectionChanged">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border Margin="0,0,0,5"
+                                Padding="8"
+                                StrokeThickness="0"
+                                BackgroundColor="#111111">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="6" />
+                            </Border.StrokeShape>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="#111111" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="#333366" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                  ColumnDefinitions="*,Auto">
+
+                                <Label Grid.Row="0"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding Name}"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       TextColor="White" />
+
+                                <Label Grid.Row="1"
+                                       Text="{Binding Kind}"
+                                       FontAttributes="Italic"
+                                       TextColor="#CCCCCC" />
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding Country}"
+                                       HorizontalTextAlignment="End"
+                                       TextColor="#CCCCCC" />
+
+                                <Label Grid.Row="2"
+                                       Text="{Binding Price, StringFormat='Ціна: {0:F2}'}"
+                                       TextColor="White" />
+
+                                <Label Grid.Row="2"
+                                       Grid.Column="1"
+                                       Text="{Binding CreatedAt, StringFormat='Створено: {0:dd.MM.yyyy}'}"
+                                       HorizontalTextAlignment="End"
+                                       TextColor="#AAAAAA"
+                                       FontSize="11" />
+
+                                <Label Grid.Row="3"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding Description}"
+                                       LineBreakMode="TailTruncation"
+                                       TextColor="#DDDDDD"
+                                       FontSize="12" />
+
+                                <Label Grid.Row="4"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding PagesAmount, StringFormat='Сторінок: {0}'}"
+                                       TextColor="#DDDDDD"
+                                       FontSize="12" />
+
+                                <Label Grid.Row="5"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding PublishingHouse, StringFormat='Видавництво: {0}'}"
+                                       TextColor="#DDDDDD"
+                                       FontSize="12" />
+
+                                <Label Grid.Row="6"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding AuthorsText, StringFormat='Автори: {0}'}"
+                                       TextColor="#DDDDDD"
+                                       FontSize="12" />
+
+                                <Label Grid.Row="4"
+                                       Grid.Column="1"
+                                       Text="{Binding ExpirationDate, StringFormat='Придатний до: {0:dd.MM.yyyy}'}"
+                                       HorizontalTextAlignment="End"
+                                       TextColor="#DDDDDD"
+                                       FontSize="12" />
+
+                                <Label Grid.Row="5"
+                                       Grid.Column="1"
+                                       Text="{Binding Amount, StringFormat='Кількість: {0}'}"
+                                       HorizontalTextAlignment="End"
+                                       TextColor="#DDDDDD"
+                                       FontSize="12" />
+
+                                <Label Grid.Row="6"
+                                       Grid.Column="1"
+                                       Text="{Binding MeasurementUnit, StringFormat='Одиниця: {0}'}"
+                                       HorizontalTextAlignment="End"
+                                       TextColor="#DDDDDD"
+                                       FontSize="12" />
+                            </Grid>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </Grid>
+
+        <Grid x:Name="AddDialog"
+              BackgroundColor="#80000000"
+              IsVisible="False">
+
+            <Border WidthRequest="360"
+                    Padding="20"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    StrokeThickness="0"
+                    BackgroundColor="#222222">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <ScrollView>
+                    <VerticalStackLayout Spacing="10">
+
+                        <Label Text="Додати товар"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="White" />
+
+                        <Picker x:Name="TypePicker"
+                                SelectedIndexChanged="OnTypeChanged"
+                                TextColor="White">
+                            <Picker.Items>
+                                <x:String>— Оберіть тип товару —</x:String>
+                                <x:String>Книга</x:String>
+                                <x:String>Продукт</x:String>
+                            </Picker.Items>
+                        </Picker>
+
+                        <Entry x:Name="NameEntry"
+                               Placeholder="Назва"
+                               BackgroundColor="White"
+                               TextColor="Black" />
+
+                        <Entry x:Name="PriceEntry"
+                               Placeholder="Ціна"
+                               Keyboard="Numeric"
+                               BackgroundColor="White"
+                               TextColor="Black" />
+
+                        <Entry x:Name="CountryEntry"
+                               Placeholder="Країна"
+                               BackgroundColor="White"
+                               TextColor="Black" />
+
+                        <Entry x:Name="DescriptionEntry"
+                               Placeholder="Опис"
+                               BackgroundColor="White"
+                               TextColor="Black" />
+
+                        <StackLayout x:Name="BookFields"
+                                     IsVisible="False"
+                                     Spacing="5">
+
+                            <Label Text="Параметри книги"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+
+                            <Entry x:Name="PagesEntry"
+                                   Placeholder="Кількість сторінок"
+                                   Keyboard="Numeric"
+                                   BackgroundColor="White"
+                                   TextColor="Black" />
+
+                            <Entry x:Name="PublishingHouseEntry"
+                                   Placeholder="Видавництво"
+                                   BackgroundColor="White"
+                                   TextColor="Black" />
+
+                            <Entry x:Name="AuthorsEntry"
+                                   Placeholder="Автори (через кому)"
+                                   BackgroundColor="White"
+                                   TextColor="Black" />
+                        </StackLayout>
+
+                        <StackLayout x:Name="GroceriesFields"
+                                     IsVisible="False"
+                                     Spacing="5">
+
+                            <Label Text="Параметри продукту"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+
+                            <HorizontalStackLayout>
+                                <Label Text="Термін придатності:"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="White" />
+                                <DatePicker x:Name="ExpirationDatePicker"
+                                            HorizontalOptions="Fill"
+                                            TextColor="White" />
+                            </HorizontalStackLayout>
+
+                            <Entry x:Name="AmountEntry"
+                                   Placeholder="Кількість"
+                                   Keyboard="Numeric"
+                                   BackgroundColor="White"
+                                   TextColor="Black" />
+
+                            <Entry x:Name="MeasurementUnitEntry"
+                                   Placeholder="Одиниця виміру (шт, кг, л...)"
+                                   BackgroundColor="White"
+                                   TextColor="Black" />
+                        </StackLayout>
+
+                        <HorizontalStackLayout HorizontalOptions="End"
+                                               Spacing="10"
+                                               Margin="0,10,0,0">
+                            <Button Text="Скасувати"
+                                    Clicked="OnCancelAddClicked" />
+
+                            <Button Text="Зберегти"
+                                    Clicked="OnSaveProductClicked" />
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

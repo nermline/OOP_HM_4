@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ConsoleApplication/ConsoleApplication.csproj" />
+  <Project Path="MauiAppTask2/MauiAppTask2.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
