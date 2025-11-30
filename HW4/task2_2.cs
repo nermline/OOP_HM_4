@@ -157,7 +157,7 @@ class Program
 {
     static void Main()
     {
-        Team team = new Team("Підараси");
+        Team team = new Team("Команда пса патрона");
         team.ShowInfo();
         team.ShowDetailedInfo();
 
